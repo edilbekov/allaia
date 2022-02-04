@@ -1,5 +1,9 @@
 @php
-	use App\Models\Subcategory;
+	use App\Models\SubCategory;
+	use App\Models\Category;
+	use App\Models\Product;
+
+	$categories=Category::select('id','name')->get();
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -28,13 +32,15 @@
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
 	<!-- SPECIFIC CSS -->
-    <link href="css/home_1.css" rel="stylesheet">
+    <link href="{{asset('css/home_1.css')}}" rel="stylesheet">
 
     <!-- YOUR CUSTOM CSS -->
-    <link href="css/custom.css" rel="stylesheet">
+    <link href="{{asset('css/custom.css')}}" rel="stylesheet">
 
 	<!-- SPECIFIC CSS -->
-    <link href="css/product_page.css" rel="stylesheet">
+	<link href="{{asset('css/product_page.css')}}" rel="stylesheet">    
+
+	@yield('style')
 
 </head>
 <body>
@@ -48,7 +54,7 @@
 				<div class="row small-gutters">
 					<div class="col-xl-3 col-lg-3 d-lg-flex align-items-center">
 						<div id="logo">
-							<a href="index.html"><img src="img/logo.svg" alt="" width="100" height="35"></a>
+							<a href="{{route('welcome')}}"><img src="{{asset('img/logo.svg')}}" alt="" width="100" height="35"></a>
 						</div>
 					</div>
 					<nav class="col-xl-6 col-lg-7">
@@ -67,7 +73,7 @@
 							</div>
 							<ul>
 								<li class="submenu">
-									<a href="javascript:void(0);" class="show-submenu">Home</a>
+									<a href="javascript:void(0);" class="show-submenu">{{ __('messages.home')}}</a>
 									<ul>
 										<li><a href="index.html">Slider</a></li>
 										<li><a href="index-2.html">Video Background</a></li>
@@ -76,7 +82,7 @@
 									</ul>
 								</li>
 								<li class="megamenu submenu">
-									<a href="javascript:void(0);" class="show-submenu-mega">Pages</a>
+									<a href="javascript:void(0);" class="show-submenu-mega">{{ __('messages.pages')}}</a>
 									<div class="menu-wrapper">
 										<div class="row small-gutters">
 											<div class="col-lg-3">
@@ -129,7 +135,7 @@
 									<!-- /menu-wrapper -->
 								</li>
 								<li class="submenu">
-									<a href="javascript:void(0);" class="show-submenu">Extra Pages</a>
+									<a href="javascript:void(0);" class="show-submenu">{{ __('messages.external_pages') }}</a>
 									<ul>
 										<li><a href="header-2.html">Header Style 2</a></li>
 										<li><a href="header-3.html">Header Style 3</a></li>
@@ -148,14 +154,14 @@
 									<a href="blog.html">Blog</a>
 								</li>
 								<li>
-									<a href="#0">Buy Template</a>
+									<a href="#0">{{ __('messages.buy_template')}}</a>
 								</li>
 							</ul>
 						</div>
 						<!--/main-menu -->
 					</nav>
 					<div class="col-xl-3 col-lg-2 d-lg-flex align-items-center justify-content-end text-end">
-						<a class="phone_top" href="tel://9438843343"><strong><span>Need Help?</span>+94 423-23-221</strong></a>
+						<a class="phone_top" href="tel://9438843343"><strong><span>{{ __('messages.need_help')}}</span>+94 423-23-221</strong></a>
 					</div>
 				</div>
 				<!-- /row -->
@@ -176,22 +182,25 @@
 													<span class="hamburger-inner"></span>
 												</span>
 											</span>
-											Categories
+											{{ __('messages.categories')}}
 										</a>
 									</span>
 									<div id="menu">
-										<ul>
-											@foreach ($categories as $category)
-											<li><span><a href="{{$category['id']}}">{{$category['name']}}</a></span>												
-												<ul>
-													@foreach (SubCategory::select('id','name')->where('category_id',$category['id'])->get() as $subcategory)
+										<ul>	
+										@foreach ($categories as $category)										
+											<li>											
+												<span>												
+													<a href="#">{{$category['name']}}</a>												
+												</span>												
+												<ul>													
 													<li>
-														<a href="listing-grid-1-full.html">{{$subcategory['name']}}</a>
-													</li>
-													@endforeach													
-												</ul>
-											</li>											
-											@endforeach											
+													@foreach (SubCategory::select('id','name')->where('category_id',$category['id'])->get() as $subcategory)
+														<a href="{{route('subcategory',['subcategory'=>$subcategory['name']])}}">{{$subcategory['name']}}</a>
+													@endforeach
+													</li>													
+												</ul>												
+											</li>	
+										@endforeach																																
 										</ul>
 									</div>
 								</li>
@@ -200,68 +209,75 @@
 					</div>
 					<div class="col-xl-6 col-lg-7 col-md-6 d-none d-md-block">
 						<div class="custom-search-input">
-							<input type="text" placeholder="Search over 10.000 products">
-							<button type="submit"><i class="header-icon_search_custom"></i></button>
+							<form action="{{route('search')}}" method="GET">
+								<input type="text" placeholder="Search over 10.000 products" name='search'>
+								<button type="submit"><i class="header-icon_search_custom"></i></button>
+							</form>
 						</div>
 					</div>
 					<div class="col-xl-3 col-lg-2 col-md-3">
 						<ul class="top_tools">
 							<li>
 								<div class="dropdown dropdown-cart">
-									<a href="cart.html" class="cart_bt"><strong>2</strong></a>
+									<a href="{{route('basket.view')}}" class="cart_bt"><strong>2</strong></a>
 									<div class="dropdown-menu">
-										<ul>
-											<li>
-												<a href="product-detail-1.html">
-													<figure><img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/thumb/1.jpg" alt="" width="50" height="50" class="lazy"></figure>
-													<strong><span>1x Armor Air x Fear</span>$90.00</strong>
-												</a>
-												<a href="#0" class="action"><i class="ti-trash"></i></a>
-											</li>
-											<li>
-												<a href="product-detail-1.html">
-													<figure><img src="img/products/product_placeholder_square_small.jpg" data-src="img/products/shoes/thumb/2.jpg" alt="" width="50" height="50" class="lazy"></figure>
-													<strong><span>1x Armor Okwahn II</span>$110.00</strong>
-												</a>
-												<a href="0" class="action"><i class="ti-trash"></i></a>
-											</li>
-										</ul>
+										<!-- <ul>											
+											<li>																																															
+												<a href="#">												
+													<figure><img src="" alt="" width="50" height="50" class="lazy"></figure>
+													<strong><span>adw</span>200</strong>																					
+												</a>																																																						
+												<a href="#0" class="action"><i class="ti-trash"></i></a>												
+											</li>																															
+										</ul> -->
 										<div class="total_drop">
-											<div class="clearfix"><strong>Total</strong><span>$200.00</span></div>
-											<a href="cart.html" class="btn_1 outline">View Cart</a><a href="checkout.html" class="btn_1">Checkout</a>
+											<!-- <div class="clearfix"><strong>Total</strong><span>200</span></div> -->
+											<a href="{{route('basket.view')}}" class="btn_1 outline">{{ __('messages.view_cart')}}</a>
+											<a href="checkout.html" class="btn_1">{{ __('messages.checkout')}}</a>
 										</div>
 									</div>
 								</div>
 								<!-- /dropdown-cart-->
 							</li>
 							<li>
-								<a href="#0" class="wishlist"><span>Wishlist</span></a>
+								@auth
+									<a href="{{route('wishlist')}}" class="wishlist"><span>Wishlist</span></a>	
+								@else
+									<a href="{{route('auth')}}" class="wishlist"><span>Wishlist</span></a>
+								@endauth								
 							</li>
 							<li>
 								<div class="dropdown dropdown-access">
-									<a href="{{route('auth')}}" class="access_link"><span>Account</span></a>
+									<a href="{{route('auth')}}" class="access_link"><span>{{ __('messages.account')}}</span></a>
 									<div class="dropdown-menu">
-										<a href="{{route('auth')}}" class="btn_1">Sign In or Sign Up</a>
+										@guest
+											<a href="{{route('auth')}}" class="btn_1">{{ __('messages.sign_in')}} {{ __('messages.or')}} {{ __('messages.sign_up')}}</a>	
+										@endguest
+										@auth
+											<a href="{{route('logout')}}" class="btn_1">{{ __('messages.track_order')}}</a>	
+										@endauth
 										<ul>
+											@auth
 											<li>
-												<a href="track-order.html"><i class="ti-truck"></i>Track your Order</a>
+												<a href="track-order.html"><i class="ti-truck"></i>{{ __('messages.track_order')}}</a>
 											</li>
 											<li>
-												<a href="account.html"><i class="ti-package"></i>My Orders</a>
+												<a href="account.html"><i class="ti-package"></i>{{ __('messages.my_orders')}}</a>
 											</li>
 											<li>
-												<a href="account.html"><i class="ti-user"></i>My Profile</a>
-											</li>
+												<a href="account.html"><i class="ti-user"></i>{{ __('messages.my_profile')}}</a>
+											</li>																						
+											@endauth										
 											<li>
-												<a href="help.html"><i class="ti-help-alt"></i>Help and Faq</a>
-											</li>
+												<a href="help.html"><i class="ti-help-alt"></i>{{ __('messages.need_help')}}</a>
+											</li>	
 										</ul>
 									</div>
 								</div>
 								<!-- /dropdown-access-->
 							</li>
 							<li>
-								<a href="javascript:void(0);" class="btn_search_mob"><span>Search</span></a>
+								<a href="javascript:void(0);" class="btn_search_mob"><span>{{ __('messages.search')}}</span></a>
 							</li>
 							<li>
 								<a href="#menu" class="btn_cat_mob">
@@ -270,7 +286,7 @@
 											<div class="hamburger-inner"></div>
 										</div>
 									</div>
-									Categories
+									{{ __('messages.categories')}}
 								</a>
 							</li>
 						</ul>
@@ -303,7 +319,7 @@
 							<li><a href="help.html">Help</a></li>
 							<li><a href="account.html">My account</a></li>
 							<li><a href="blog.html">Blog</a></li>
-							<li><a href="contacts.html">Contacts</a></li>
+							<li><a href="{{route('contacting')}}">Contacts</a></li>
 						</ul>
 					</div>
 				</div>
@@ -311,12 +327,9 @@
 					<h3 data-bs-target="#collapse_2">Categories</h3>
 					<div class="collapse dont-collapse-sm links" id="collapse_2">
 						<ul>
-							<li><a href="listing-grid-1-full.html">Clothes</a></li>
-							<li><a href="listing-grid-2-full.html">Electronics</a></li>
-							<li><a href="listing-grid-1-full.html">Furniture</a></li>
-							<li><a href="listing-grid-3.html">Glasses</a></li>
-							<li><a href="listing-grid-1-full.html">Shoes</a></li>
-							<li><a href="listing-grid-1-full.html">Watches</a></li>
+							@foreach ($categories as $category)
+								<li><a href="#">{{$category->name}}</a></li>							
+							@endforeach							
 						</ul>
 					</div>
 				</div>
@@ -342,10 +355,10 @@
 						<div class="follow_us">
 							<h5>Follow Us</h5>
 							<ul>
-								<li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="img/twitter_icon.svg" alt="" class="lazy"></a></li>
-								<li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="img/facebook_icon.svg" alt="" class="lazy"></a></li>
-								<li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="img/instagram_icon.svg" alt="" class="lazy"></a></li>
-								<li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="img/youtube_icon.svg" alt="" class="lazy"></a></li>
+								<li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="{{asset('img/twitter_icon.svg')}}" alt="" class="lazy"></a></li>
+								<li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="{{asset('img/facebook_icon.svg')}}" alt="" class="lazy"></a></li>
+								<li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="{{asset('img/instagram_icon.svg')}}" alt="" class="lazy"></a></li>
+								<li><a href="#0"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="{{asset('img/youtube_icon.svg')}}" alt="" class="lazy"></a></li>
 							</ul>
 						</div>
 					</div>
@@ -374,7 +387,7 @@
 								</select>
 							</div>
 						</li>
-						<li><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="img/cards_all.svg" alt="" width="198" height="30" class="lazy"></li>
+						<li><img src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="{{asset('img/cards_all.svg')}}" alt="" width="198" height="30" class="lazy"></li>
 					</ul>
 				</div>
 				<div class="col-lg-6">
@@ -391,9 +404,10 @@
 	
 	<div id="toTop"></div><!-- Back to top button -->
 	<!-- COMMON SCRIPTS -->
-    <script src="js/common_scripts.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="{{asset('js/common_scripts.min.js')}}"></script>
+    <script src="{{asset('js/main.js')}}"></script>
 	<!-- SPECIFIC SCRIPTS -->
-	<script src="js/carousel-home.min.js"></script>
+	<div id="mm-blocker" class="mm-slideout"></div>
+	<script src="{{asset('js/carousel-home.min.js')}}"></script>
 </body>
 </html>

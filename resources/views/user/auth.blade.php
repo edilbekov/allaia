@@ -16,7 +16,7 @@
 			<div class="row justify-content-center">
 			<div class="col-xl-6 col-lg-6 col-md-8">
 				<div class="box_account">
-					<h3 class="client">Already Client</h3>
+					<h3 class="client">{{ __('messages.already_client')}}</h3>
 					<div class="form_container">
 						<div class="row no-gutters">
 							<div class="col-lg-6 pr-lg-1">
@@ -31,10 +31,10 @@
                         <form action="{{route('login')}}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email_user" id="email" placeholder="Email*">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Email*">
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" name="password_user" id="password_in" value="" placeholder="Password*">
+                                <input type="password" class="form-control" name="password" id="password_in" value="" placeholder="Password*">
                             </div>
                             <div class="clearfix add_bottom_15">
                                 <div class="checkboxes float-start">
@@ -53,53 +53,45 @@
                                 <p>A new password will be sent shortly.</p>
                                 <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
                             </div>
-
                         </form>
 					</div>
 					<!-- /form_container -->
 				</div>
 				<!-- /box_account -->				
 			</div>
+            
 			<div class="col-xl-6 col-lg-6 col-md-8">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                    </ul>
+                </div>
+            @endif
 				<div class="box_account">
-					<h3 class="new_client">New Client</h3> <small class="float-right pt-2">* Required Fields</small>
+					<h3 class="new_client">{{ __('messages.new_client')}}</h3> <small class="float-right pt-2">* Required Fields</small>
 					
-                    <form action="{{route('registration')}}" method="POST">
+                    <form method="POST" action="{{route('registration')}}">
                         @csrf
                         <div class="form_container">
                             <div class="form-group">
-                                <input type="text" class="form-control" name="name" id="email_2" placeholder="Name*">
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Name">
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" name="email" id="email_2" placeholder="Email*">
+                                <input type="email" class="form-control" name="email" id="email_2" placeholder="Email">
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" name="password" id="password_in_2" value="" placeholder="Password*">
+                                <input type="password" class="form-control" name="password" id="password_in_2" value="" placeholder="Password">
                             </div>
-                            
                             <div class="form-group">
-                                <label class="container_radio" style="display: inline-block; margin-right: 15px;">Private
-                                    <input type="radio" name="client_type" checked value="private">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <label class="container_radio" style="display: inline-block;">Company
-                                    <input type="radio" name="client_type" value="company">
-                                    <span class="checkmark"></span>
-                                </label>
+                                <input type="password" class="form-control" name="password_confirmation" id="password_in" value="" placeholder="Password*">
                             </div>
-                                                    
-                            <div class="form-group">
-                                <label class="container_check">Accept <a href="#0">Terms and conditions</a>
-                                    <input type="checkbox">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="text-center">
-                                <input type="submit" value="Register" class="btn_1 full-width">
-                            </div>
+                            <hr>
+                            <div class="text-center"><input type="submit" value="Register" class="btn_1 full-width"></div>
                         </div>
-
-                    </form>
+                </form>
 					<!-- /form_container -->
 				</div>
 				<!-- /box_account -->

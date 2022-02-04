@@ -29,11 +29,11 @@ class CategoryController extends Controller
         Category::create([
             'name'=>$name
         ]);
-        return redirect('categories');
+        return redirect()->route('categories');
     }
     public function delete($id){
         Category::find($id)->delete();
-        return redirect("categories");
+        return redirect()->route('categories');
     }
     public function edit($id){
         return view("pages.category.edit",['id'=>$id]);
@@ -45,6 +45,6 @@ class CategoryController extends Controller
         if(!$exist){
             Category::find($id)->update(['name'=>$edited_category]);            
         }        
-        return redirect("categories");
+        return redirect()->route('categories');
     }
 }

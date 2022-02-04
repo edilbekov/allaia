@@ -1,0 +1,35 @@
+<?php
+return [
+    'welcome'=>'salom',
+    'external_pages'=>'Tashqi sahifalar',
+    'pages'=>'SAHIFALAR',
+    'home'=>'uy',
+    'buy_template'=>'Shablon xarid qilish',       
+    'need_help'=>'Yordam?',
+    'categories'=>'Kategoriyalar',
+    'view_cart'=>"Savatni ko'rish",
+    'checkout'=>'Kassa', 
+    'sign_in'=>"Kirish",
+    'sign_up'=>"Ro'yxatdan o'tish",
+    'or'=>'yoki',
+    'account'=>'Hisobot',
+    'logout'=>'Chiqish',
+    'track_order'=>'Buyurtmani Kuzatmoq',
+    'my_orders'=>'Mening Buyurtmalarim',
+    'my_profile'=>'Mening Profilim',
+    'search'=>'Izlash',
+    'men_collection'=>"Erkaklar To'plami",
+    'women_collection'=>"Ayollar To'plami",
+    'shop'=>'Xarid qilmoq',
+    'kid_collection'=>"Bolalar To'plami",
+    'top_selling'=>"Ko'p Sotilganlar",
+    'products'=>'Mahsulotlar',
+    'more_seen'=>"Ko'p ko'rilganlar",
+    'latest_news'=>'Oxirgi Yangiliklar',
+    'new'=>'Yangi',
+    'already_client'=>'Mijoz',
+    'new_client'=>'Yangi Mijoz',
+    
+]
+
+?>

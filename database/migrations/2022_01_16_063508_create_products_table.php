@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->json('sizes');
             $table->json('colors');
             $table->json('images');
-            $table->integer('all_view');
+            $table->integer('all_view')->default(0);
             $table->timestamps();
         });
     }

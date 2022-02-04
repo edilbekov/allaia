@@ -34,11 +34,11 @@ class SubCategoryController extends Controller
                 'name'=>$category_name
             ]);
         }              
-        return redirect('subcategories');
+        return redirect()->route("subcategories");
     }
     public function delete($id){
         SubCategory::find($id)->delete();
-        return redirect("subcategories");
+        return redirect()->route("subcategories");
     }
     public function edit($id){
         return view("pages.subcategory.edit",['id'=>$id]);
@@ -49,7 +49,7 @@ class SubCategoryController extends Controller
         if(!$exist){
             SubCategory::find($id)->update(['name'=>$edited_category]);            
         }        
-        return redirect("subcategories");
+        return redirect()->route("subcategories");
     }
     public function subcategory($id){
         return SubCategory::select('id','name')->where('category_id',$id)->get();

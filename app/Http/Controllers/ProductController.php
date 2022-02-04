@@ -40,7 +40,7 @@ class ProductController extends Controller
     }
     public function delete($id){
         Product::find($id)->delete();
-        return redirect("list");
+        return redirect()->route("list");
     }
     public function edit($id){
         $product=Product::select("name","price","discount_price","descriptions","sizes","colors")->where("id",$id)->get();
@@ -55,6 +55,6 @@ class ProductController extends Controller
             'sizes'=>json_encode(explode(', ',$request->sizes)),
             'colors'=>json_encode(explode(', ',$request->colors))
         ]);
-        return redirect("list");
+        return redirect()->route("list");
     }
 }

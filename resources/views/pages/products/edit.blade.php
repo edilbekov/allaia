@@ -35,7 +35,7 @@
         </div>
         <div class="col-4">
             <label for="exampleInputEmail1" class="form-label">Colors</label>
-            <input type="text" value="{{implode(', ',json_decode($product[0]['colors'],1))}}" value="{{$product[0]['colors']}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="colors">    
+            <input type="text" value="{{implode(', ',json_decode($product[0]['colors'],1))}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="colors">    
         </div>
         <div class="col-4">
             <label for="exampleInputEmail1" class="form-label">Photo</label>

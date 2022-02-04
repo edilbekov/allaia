@@ -1,0 +1,35 @@
+<?php
+return [
+    'welcome'=>'welcome',
+    'external_pages'=>'external_pages',
+    'pages'=>'pages',
+    'home'=>'HOME',
+    'buy_template'=>'buy template',
+    'need_help'=>'Need Help?',
+    'categories'=>'categories',
+    'view_cart'=>'view cart',
+    'checkout'=>'checkout',
+    'sign_in'=>'sign_in',
+    'sign_up'=>'sign_up',
+    'or'=>'or',
+    'account'=>'Account',
+    'logout'=>'Logout',
+    'track_order'=>'Track your Order',
+    'my_orders'=>'My Orders',
+    'my_profile'=>'My Profile',
+    'search'=>'Search',
+    'men_collection'=>"Men's Collection",
+    'shop'=>'Shop Now',
+    'women_collection'=>"Women's Collection",
+    'kid_collection'=>"Kid's Collection",
+    'top_selling'=>'Top Selling',
+    'products'=>'Products',
+    'more_seen'=>'Featured',
+    'new'=>'New',
+    'latest_news'=>'Latest News',
+    'already_client'=>'Already Client',
+    'new_client'=>'New Client',
+    
+
+]
+?>
